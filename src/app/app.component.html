@@ -1,0 +1,892 @@
+<div  *ngIf="loginPage" style="width: 100%; height: 100%;background-color:gainsboro;background-repeat: no-repeat;
+background-size: 100%;background-image: url(https://cdn.wallpapersafari.com/45/4/wMPXDm.jpg);">
+
+<div style="display: flex;align-items: center;width: 100%; height: 100%; justify-content: center;">
+
+    <mat-card style="background-color:rgb(214, 233, 240);height: 38%;width: 25%;padding: 5%;">
+    <mat-card-title style="display: flex;align-items: center; justify-content: center;font-family: 'Roboto Slab', serif;font-weight: bold;">Herbal Remedies</mat-card-title>
+    <mat-card-subtitle style="font-size:  20px;margin-top: 40px;color:black;font-family: 'Roboto Slab', serif;">Sign In!!</mat-card-subtitle>
+    <mat-card-content>
+      <p>
+        <mat-form-field appearance="standard" style="width:100%">
+          <mat-label style="font-family: 'Roboto Slab', serif;">User Id</mat-label>
+          <input matInput [(ngModel)]="userID" placeholder="Enter your user ID">
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+          <mat-hint>user123</mat-hint>
+        </mat-form-field>
+      </p>
+      <mat-form-field appearance="standard" style="width:100%">
+        <mat-label style="font-family: 'Roboto Slab', serif;">Password</mat-label>
+        <input matInput [(ngModel)]="password" [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <table style="width: 100%;text-align: left;">
+     <tr>
+          <td> <button mat-raised-button color="primary" (click)="login()" style="width:50%;margin-top:10px;font-family: 'Roboto Slab', serif;margin-bottom: 10px;">Login</button>
+          </td>
+          <td> <button mat-raised-button color="primary" (click)="SignUp()" style="width:50%;margin-top:10px;left:90px;font-family: 'Roboto Slab', serif;margin-bottom: 10px;">New User</button>
+          </td>
+          <td style="text-align: left;"><mat-spinner [diameter]="25" *ngIf="loader"></mat-spinner></td>
+
+      </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+</div>
+
+
+<div  *ngIf="signup" style="width: 100%; height: 100%;background-color:gainsboro;background-repeat: no-repeat;
+background-size: 100%;background-image: url(https://cdn.wallpapersafari.com/45/4/wMPXDm.jpg);">
+
+<div style="display: flex;align-items: center;width: 100%; height: 100%; justify-content: center;">
+
+    <mat-card style="background-color:rgb(214, 233, 240);height: 50%;width: 50%;padding: 5%;">
+    <mat-card-title style="display: flex;align-items: center; justify-content: center;font-family: 'Roboto Slab', serif;font-weight: bold;">Herbal Remedies</mat-card-title>
+    <mat-card-subtitle style="font-size:  20px;margin-top: 40px;color:black;font-family: 'Roboto Slab', serif;">Sign Up!!</mat-card-subtitle>
+    <mat-card-content>
+      <table style="width: 100%;">
+        <tr>
+          <td>
+            <p>
+              <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                <mat-label style="font-family: 'Roboto Slab', serif;">Name</mat-label>
+                <input matInput [(ngModel)]="uName" (keypress)="keyPressForAlphabet($event)" placeholder="Enter your Name">
+              </mat-form-field>
+            </p>
+          </td>
+          <td>
+            <p>
+            <mat-form-field appearance="standard" style="width:80%;">
+              <mat-label style="font-family: 'Roboto Slab', serif;">Username</mat-label>
+              <input matInput [(ngModel)]="Username" placeholder="Enter username">
+            </mat-form-field>
+          </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p >
+              <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                <mat-label style="font-family: 'Roboto Slab', serif;">Address</mat-label>
+                <input matInput [(ngModel)]="uAddress" placeholder="Enter address">
+              </mat-form-field>
+            </p>
+          </td>
+          <td>
+            <p >
+            <mat-form-field appearance="standard" style="width:80%;">
+              <mat-label style="font-family: 'Roboto Slab', serif;">Contact Number</mat-label>
+              <input matInput [(ngModel)]="ContactNumber" (keypress)="keyPressNumbers($event)"
+              placeholder="Enter your contact number">
+            </mat-form-field>
+          </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p >
+            <mat-form-field appearance="standard" style="width:80%;">
+              <mat-label style="font-family: 'Roboto Slab', serif;">Location</mat-label>
+              <input matInput [(ngModel)]="uLocation" placeholder="Enter city">
+            </mat-form-field>
+          </p>
+          </td>
+          <td>
+            <p >
+              <mat-form-field appearance="standard" style="width:80%;">
+                <mat-label style="font-family: 'Roboto Slab', serif;">Password</mat-label>
+                <input matInput [(ngModel)]="uPassword" minlength="5" maxlength="8" [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-hint>
+                  Should Contain 5 to 8 characters along with lower-case , upper-case , digit and special character
+                </mat-hint>
+              </mat-form-field>
+            </p>
+          </td>
+
+        </tr>
+
+        <tr colspan="2">
+          <td>
+            <button mat-raised-button color="primary" (click)="createUser()" style="width:40%;margin-top:40px;font-family: 'Roboto Slab', serif;margin-bottom: 10px;">Register</button>
+          </td>
+
+        </tr>
+      </table>
+
+
+
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+</div>
+
+<div  *ngIf="userLogin" style="width: 100%; height: 100%;background-color:gainsboro;background-repeat: no-repeat;
+background-size: 100%;background-image: url(https://cdn.wallpapersafari.com/45/4/wMPXDm.jpg);">
+
+<div style="display: flex;align-items: center;width: 100%; height: 100%; justify-content: center;">
+
+    <mat-card style="background-color:rgb(214, 233, 240);height: 38%;width: 25%;padding: 5%;">
+    <mat-card-title style="display: flex;align-items: center; justify-content: center;font-family: 'Roboto Slab', serif;font-weight: bold;">Herbal Remedies</mat-card-title>
+    <mat-card-subtitle style="font-size:  20px;margin-top: 40px;color:black;font-family: 'Roboto Slab', serif;">Sign In!!</mat-card-subtitle>
+    <mat-card-content>
+      <p>
+        <mat-form-field appearance="standard" style="width:100%">
+          <mat-label style="font-family: 'Roboto Slab', serif;">User Id</mat-label>
+          <input matInput [(ngModel)]="uid" placeholder="Enter your user ID">
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+
+        </mat-form-field>
+      </p>
+      <mat-form-field appearance="standard" style="width:100%">
+        <mat-label style="font-family: 'Roboto Slab', serif;">Password</mat-label>
+        <input matInput [(ngModel)]="pass" [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <table style="width: 100%;text-align: left;">
+     <tr>
+          <td> <button mat-raised-button color="primary" (click)="loginuser()" style="width:40%;margin-top:10px;font-family: 'Roboto Slab', serif;margin-bottom: 10px;">Login</button>
+          </td>
+          <td style="text-align: left;"><mat-spinner [diameter]="25" *ngIf="loader"></mat-spinner></td>
+
+      </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+</div>
+
+
+<div  *ngIf="dashboardPage" style="width: 100%; height: 100%;background-color:gainsboro;background-repeat: no-repeat;
+background-size: 100%;">
+
+<div style="width: 100%; height: 100%;">
+
+  <mat-toolbar style="display: flex;background-image:url(https://i.pinimg.com/474x/23/a4/8e/23a48e57a704ad243fc8c2a261764f6a.jpg) ;align-items: center; justify-content: center;font-family: 'Roboto Slab', serif;font-weight: bold;font-size: 30px;">Herbal Guide</mat-toolbar>
+
+  <mat-drawer-container class="example-container">
+    <mat-drawer mode="side" opened style="width: 20%;color: white; background-image: url(https://www.uidownload.com/files/445/11/672/branches-with-green-leaves-background.jpg);  background-size: cover;">
+      <table style="width: 100%;">
+        <tr>
+          <td>
+            <button mat-button (click)="home()" style="width: 100%;margin-bottom: 3px;padding:10px">Home</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button mat-button *ngIf="role=='admin' || role=='employee'" (click)="info()" style="width: 100%;margin-bottom: 3px;padding:10px">Add Plant Info</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button mat-button *ngIf="role=='admin'" (click)="addResercher()" style="width: 100%;margin-bottom: 3px;padding:10px">Add Researcher</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <button mat-button *ngIf="role=='admin'"  (click)="userInfo()" style="width: 100%;margin-bottom: 3px;padding:10px">Researcher Information</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button mat-button *ngIf="role=='admin'" (click)="User()" style="width: 100%;margin-bottom: 3px;padding:10px">User Information</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button mat-button (click)="Search()" style="width: 100%;margin-bottom: 3px;padding:10px">Search Plants</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button mat-button (click)="about()" style="width: 100%;margin-bottom: 3px;padding:10px">About</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button mat-button (click)="logout()" style="width: 100%;margin-bottom: 3px;padding:10px">Logout</button>
+          </td>
+        </tr>
+      </table>
+    </mat-drawer>
+    <mat-drawer-content>
+      <div style="width: 100%;height: 100%;">
+        <mat-card *ngIf="searchContent" style="width: 97%;">
+          <p >
+            <mat-form-field appearance="standard" style="width:80%;">
+              <mat-label style="font-family: 'Roboto Slab', serif;">Your Views</mat-label>
+              <input matInput [(ngModel)]="searchKeywords"
+              placeholder="Enter your comment here">
+            </mat-form-field>
+          </p>
+          <p >
+            <button mat-raised-button (click)="searchForPlants()" style="margin-right: 15px;">Search</button>
+          </p>
+          <div *ngFor="let character of searchResults" class="home">
+            <mat-card style="padding-top: 20px;margin-top: 20px;background-color: rgb(245, 243, 243);">
+              <h1>
+                {{character.name}}
+                <br>
+                <h5>
+                  <i> {{character.category}}</i>
+
+                </h5>
+              </h1>
+
+              <h3>
+                <b>
+                  Region <br>
+                </b>
+                {{character.location}}
+              </h3>
+
+
+          <div class="homeImg">
+
+                <img [src]="character.image" width="80%" height="500">
+              </div>
+              <h3>
+
+                <br>
+                {{character.description}}
+              </h3>
+              <h3><b>Benefits</b> <br>
+                {{character.benefits}}
+              </h3>
+              <h3>
+                <b>
+                  Side Effects
+                </b>
+                <br>
+                {{character.sideeffects}}
+              </h3>
+              <h4>
+                <i>Uploaded By - <b>{{character.uploadedby}}</b></i>
+
+              </h4>
+              <mat-card-actions>
+                <button *ngIf="role=='employee' || role=='admin'" mat-raised-button (click)="editPlantInfo(character._id,character.name,character.category,character.location,character.description,
+                character.image,character.benefits,character.sideeffects,character.uploadedby)">Edit</button>
+                <button mat-raised-button (click)="_getCommentList(character._id)">Comment</button>
+              </mat-card-actions>
+            </mat-card>
+
+          </div>
+
+        </mat-card>
+        <mat-card *ngIf="homeContent" style="width: 97%;">
+          <div *ngFor="let character of plant" class="home">
+            <mat-card style="padding-top: 20px;margin-top: 20px;background-color: rgb(245, 243, 243);">
+              <h1>
+                {{character.name}}
+                <br>
+                <h5>
+                  <i> {{character.category}}</i>
+
+                </h5>
+              </h1>
+
+              <h3>
+                <b>
+                  Region <br>
+                </b>
+                {{character.location}}
+              </h3>
+
+
+          <div class="homeImg">
+
+                <img [src]="character.image" width="80%" height="500">
+              </div>
+              <h3>
+
+                <br>
+                {{character.description}}
+              </h3>
+              <h3><b>Benefits</b> <br>
+                {{character.benefits}}
+              </h3>
+              <h3>
+                <b>
+                  Side Effects
+                </b>
+                <br>
+                {{character.sideeffects}}
+              </h3>
+              <h4>
+                <i>Uploaded By - <b>{{character.uploadedby}}</b></i>
+
+              </h4>
+              <mat-card-actions>
+                <button *ngIf="role=='employee' || role=='admin'" mat-raised-button (click)="editPlantInfo(character._id,character.name,character.category,character.location,character.description,
+                character.image,character.benefits,character.sideeffects,character.uploadedby)">Edit</button>
+                <button mat-raised-button (click)="_getCommentList(character._id)">Comment</button>
+              </mat-card-actions>
+            </mat-card>
+
+          </div>
+
+        </mat-card>
+        <mat-card *ngIf="commentPart" style="width: 97%;">
+          <p >
+            <mat-form-field appearance="standard" style="width:80%;">
+              <mat-label style="font-family: 'Roboto Slab', serif;">Your Views</mat-label>
+              <input matInput [(ngModel)]="commentMsg"
+              placeholder="Enter your comment here">
+            </mat-form-field>
+          </p>
+          <Table>
+            <tr>
+              <td>
+                <button mat-raised-button (click)="addComment()" style="margin-right: 15px;">Add Comment</button>
+              </td>
+              <td>
+                <button mat-raised-button (click)="backFromComment()" >Cancel</button>
+              </td>
+            </tr>
+          </Table>
+          <div *ngFor="let character of commentList" class="home">
+            <mat-card style="padding-top: 10px;margin-top: 10px;background-color: rgba(15, 114, 228, 0.288);">
+              <h4 style="color: rgba(0, 0, 0, 0.945);font-size:20px">
+                <b>
+                  {{character.userId}}
+                </b>
+              </h4>
+              <h4>
+                {{character.message}}
+              </h4>
+            </mat-card>
+
+          </div>
+
+        </mat-card>
+
+      <mat-card *ngIf="addResearchContent" style="width: 90%;height: 90%;background-image:url(https://cdn.dribbble.com/users/879147/screenshots/7024649/media/7598d79b7ea5534415e09f5a3b0fc913.png?compress=1&resize=400x300);background-repeat: no-repeat; background-size: cover;">
+        <mat-card-title style="display: flex;align-items: center; justify-content: left;font-family: 'Playfair Display', serif;font-weight: bold;padding:10px">Add Researcher</mat-card-title>
+        <mat-card-content>
+          <table style="width: 100%;">
+            <tr>
+              <td>
+                <p>
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Name</mat-label>
+                    <input matInput [(ngModel)]="empName" (keypress)="keyPressForAlphabet($event)"  placeholder="Enter your user ID">
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+                <p>
+                <mat-form-field appearance="standard" style="width:100%;">
+                  <mat-label style="font-family: 'Roboto Slab', serif;">Username</mat-label>
+                  <input matInput [(ngModel)]="empUsername" placeholder="Enter your"placeholder="Enter username" >
+                </mat-form-field>
+              </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Email</mat-label>
+                    <input matInput [(ngModel)]="empEmail" placeholder="Enter email your email" [formControl]="email" >
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+                <p >
+                <mat-form-field appearance="standard" style="width:100%;">
+                  <mat-label style="font-family: 'Roboto Slab', serif;">Contact Number</mat-label>
+                  <input matInput [(ngModel)]="empContactNumber" (keypress)="keyPressEmpNumbers($event)" placeholder="Enter contact number" >
+                </mat-form-field>
+              </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Address</mat-label>
+                    <input matInput [(ngModel)]="empAddress" placeholder="Enter address">
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+                <p >
+                <mat-form-field appearance="standard" style="width:100%;">
+                  <mat-label style="font-family: 'Roboto Slab', serif;">Location</mat-label>
+                  <input matInput [(ngModel)]="empLocation" placeholder="Enter city">
+                </mat-form-field>
+              </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Qualification</mat-label>
+                    <input matInput [(ngModel)]="empQualification" placeholder="Enter Hightest Qualification" >
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+                <p >
+                <mat-form-field appearance="standard" style="width:100%;">
+                  <mat-label style="font-family: 'Roboto Slab', serif;">Experience</mat-label>
+                  <input matInput type="number" [(ngModel)]="empExperience"  placeholder="Enter Experience in years" >
+                </mat-form-field>
+              </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Password</mat-label>
+                    <input matInput [(ngModel)]="empPassword" minlength="5" maxlength="8" [type]="hide ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" required>
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-hint>
+                      Should Contain 5 to 8 characters along with lower-case , upper-case , digit and special character
+                    </mat-hint>
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+              </td>
+            </tr>
+            <tr colspan="2">
+              <td>
+                <button mat-raised-button color="primary" (click)="createEmployee()" style="width:40%;margin-top:40px;font-family: 'Roboto Slab', serif;margin-bottom: 10px;">Register</button>
+              </td>
+            </tr>
+          </table>
+
+
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card *ngIf="editResearchContent" style="width: 90%;height: 90%;background-image:url(https://cdn.dribbble.com/users/879147/screenshots/7024649/media/7598d79b7ea5534415e09f5a3b0fc913.png?compress=1&resize=400x300);background-repeat: no-repeat; background-size: cover;">
+        <mat-card-title style="display: flex;align-items: center; justify-content: left;font-family: 'Playfair Display', serif;font-weight: bold;padding:10px">Add Researcher</mat-card-title>
+        <mat-card-content>
+          <table style="width: 100%;">
+            <tr>
+              <td>
+                <p>
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Name</mat-label>
+                    <input matInput [(ngModel)]="editEmpName"  >
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+                <p>
+                <mat-form-field appearance="standard" style="width:100%;">
+                  <mat-label style="font-family: 'Roboto Slab', serif;">Username</mat-label>
+                  <input matInput [(ngModel)]="editEmpId">
+                </mat-form-field>
+              </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Email</mat-label>
+                    <input matInput [(ngModel)]="editEmpEmail"  [formControl]="email" >
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+                <p >
+                <mat-form-field appearance="standard" style="width:100%;">
+                  <mat-label style="font-family: 'Roboto Slab', serif;">Contact Number</mat-label>
+                  <input matInput pattern="[0-9]*" [(ngModel)]="editEmpContact" >
+                </mat-form-field>
+              </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Address</mat-label>
+                    <input matInput [(ngModel)]="editEmpAddress">
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+                <p >
+                <mat-form-field appearance="standard" style="width:100%;">
+                  <mat-label style="font-family: 'Roboto Slab', serif;">Location</mat-label>
+                  <input matInput [(ngModel)]="editEmpLocation" >
+                </mat-form-field>
+              </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Qualification</mat-label>
+                    <input matInput [(ngModel)]="editEmpQualification" >
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+                <p >
+                <mat-form-field appearance="standard" style="width:100%;">
+                  <mat-label style="font-family: 'Roboto Slab', serif;">Experience</mat-label>
+                  <input matInput [(ngModel)]="editEmpExperience"  >
+                </mat-form-field>
+              </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Password</mat-label>
+                    <input matInput [(ngModel)]="editPassword" [type]="hide ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" required>
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+              </td>
+            </tr>
+            <tr colspan="2">
+              <td>
+                <button mat-raised-button color="primary" (click)="updateReseracherInfo()" style="width:40%;margin-top:40px;font-family: 'Roboto Slab', serif;margin-bottom: 10px;">Update</button>
+              </td>
+            </tr>
+          </table>
+
+
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card *ngIf="uploadData" style="width: 90%;height: 99%;background-image:url();background-repeat: no-repeat; background-size: cover;">
+        <mat-card-title style="display: flex;align-items: center; justify-content: left;font-family: 'Playfair Display', serif;font-weight: bold;padding:10px">Add Info</mat-card-title>
+        <mat-card-content>
+          <table style="width: 100%;">
+            <tr>
+              <td>
+                <p>
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Name Of Plant</mat-label>
+                    <input matInput [(ngModel)]="plantName"  >
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+                <p>
+                <mat-form-field appearance="standard" style="width:100%;">
+                  <mat-label style="font-family: 'Roboto Slab', serif;">Category</mat-label>
+                  <input matInput [(ngModel)]="plantCategory">
+                </mat-form-field>
+              </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Description</mat-label>
+                    <textarea matInput  [(ngModel)]="plantDescription" ></textarea>
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+                <p >
+                <mat-form-field appearance="standard" style="width:100%;">
+                  <mat-label style="font-family: 'Roboto Slab', serif;">Where is it found?</mat-label>
+                  <input matInput [(ngModel)]="plantLocation" placeholder="eg . Southern India , Indian subcontinent">
+                </mat-form-field>
+              </p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Benefits</mat-label>
+                    <input matInput [(ngModel)]="plantBenefits" >
+                  </mat-form-field>
+                </p>
+              </td>
+
+            </tr>
+            <tr>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:80%;padding-left: 10px;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Image Url</mat-label>
+                    <input matInput [(ngModel)]="imageUrl" >
+                  </mat-form-field>
+                </p>
+              </td>
+              <td>
+                <p >
+                  <mat-form-field appearance="standard" style="width:100%;">
+                    <mat-label style="font-family: 'Roboto Slab', serif;">Uploaded By</mat-label>
+                    <input matInput [(ngModel)]="loggedIn" disabled>
+                  </mat-form-field>
+                </p>
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <td>
+                <p >
+                <mat-form-field appearance="standard" style="width:100%;">
+                  <mat-label style="font-family: 'Roboto Slab', serif;">Side Effects</mat-label>
+                  <input matInput [(ngModel)]="sideEffects"  >
+                </mat-form-field>
+              </p>
+              </td>
+            </tr>
+
+
+            <tr colspan="2">
+              <td>
+                <button mat-raised-button color="primary" (click)="createPlantInfo()" style="width:40%;margin-top:40px;font-family: 'Roboto Slab', serif;margin-bottom: 10px;">Upload</button>
+              </td>
+            </tr>
+          </table>
+
+
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card *ngIf="userInfoContent" style="width: 98%;height: 90%;">
+        <mat-card-title style="display: flex;align-items: center; justify-content: left;font-family:'Playfair Display', serif;font-weight: bold;padding:10px;color:rgb(181, 248, 80)">Researcher Details</mat-card-title>
+        <mat-card-content>
+        <table mat-table [dataSource]="dataSource" class="listtable" >
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="_id">
+            <th mat-header-cell *matHeaderCellDef class="ltitle" >ID</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element._id }}
+            </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Name</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.name }}
+            </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="userId">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Username</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.userId }}
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="qualification">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Qualification</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.qualification }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="password">
+            <th mat-header-cell *matHeaderCellDef class="ltitle"></th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.password }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef class="ltitle" >Location</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.location }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="experience">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Experience</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.experience }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Email
+            </th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.email  }}
+            </td>
+          </ng-container>
+          <!-- <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Date</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.date  }}
+            </td>
+          </ng-container> -->
+          <ng-container matColumnDef="contact">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Contact</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.contact  }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Address</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.address  }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="edit" >
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Edit</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              <button
+                mat-icon-button
+                style="background: none; color: black; width: 60px"
+                (click)="
+                  editResearcher(
+                    element.name,
+                    element.userId,
+                    element.qualification,
+                    element.location,
+                    element.experience,
+                    element.email,
+                    element.contact,
+                    element.address,
+                    element.password,
+                    element._id
+                  )
+                "
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            class="listh"
+            *matRowDef="let row; columns: displayedColumns"
+          ></tr>
+        </table>
+      </mat-card-content>
+      </mat-card>
+
+
+      <mat-card *ngIf="viewUser" style="width: 98%;height: 90%;">
+        <mat-card-title style="display: flex;align-items: center; justify-content: left;font-family: 'Playfair Display', serif;font-weight: bold;padding:10px;color:rgb(181, 248, 80)">User Details</mat-card-title>
+        <mat-card-content>
+        <table mat-table [dataSource]="userData" class="listtable" >
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="_id">
+            <th mat-header-cell *matHeaderCellDef class="ltitle" >ID</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element._id }}
+            </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Name</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.name }}
+            </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="userId">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Username</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.userId }}
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="contact">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Contact</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.contact }}
+            </td>
+          </ng-container>
+\
+
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef class="ltitle" >Location</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.location }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef class="ltitle">Address</th>
+            <td mat-cell *matCellDef="let element" class="lcontent">
+              {{ element.address}}
+            </td>
+          </ng-container>
+
+
+
+          <tr mat-header-row *matHeaderRowDef="displayUser"></tr>
+          <tr
+            mat-row
+            class="listh"
+            *matRowDef="let row; columns: displayUser"
+          ></tr>
+        </table>
+      </mat-card-content>
+      </mat-card>
+
+
+      <mat-card *ngIf="aboutContent" style="width: 90%;height: 60%;">
+        <mat-card-title style="display: flex;align-items: center; justify-content: left;font-family: 'Playfair Display', serif;font-weight: bold;padding:10px">About Herbal Remedies</mat-card-title>
+        <mat-card-content>
+          <p>
+            Herbal Guide is a service of the National Library of Medicine (NLM), the world's largest medical library, which is part of the National Institutes of Health (NIH).
+
+Our mission is to present high-quality, relevant health and wellness information that is trusted, easy to understand, and free of advertising, in both English and Spanish. Anywhere, anytime, on any device—for free.
+          </p>
+          <p>
+            Herbal Guide is an online health information resource for patients and their families and friends. It is a service of the National Library of Medicine (NLM), the world's largest medical library, and a part of the National Institutes of Health (NIH).
+
+Our mission is to present high-quality, relevant health and wellness information that is trusted and easy to understand, in both English and Spanish. We make reliable health information available anytime, anywhere, for free. There is no advertising on this website, and MedlinePlus does not endorse any companies or products.
+          </p>
+        </mat-card-content>
+      </mat-card>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+
+  <mat-toolbar class="example-footer">Website Hit Counter - {{count}}</mat-toolbar>
+
+</div>
+
+</div>
